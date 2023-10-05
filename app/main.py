@@ -1,14 +1,30 @@
 from fastapi import FastAPI, Depends
 from typing import List
+from sqlalchemy.orm import Session
 
-from .models import SalesDataRequest, SalesDataResponse, InventoryStatusResponse, ProductRegistrationRequest
+from .database import get_db, engine
+from .models import (
+    SalesDataRequest,
+    SalesDataResponse,
+    InventoryStatusResponse,
+    ProductRegistrationRequest
+)
+
+from . import schemas
+
+schemas.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 
 @app.get("/api/sales", response_model=List[SalesDataResponse])
-async def get_sales_data(request: SalesDataRequest = Depends()):
+async def get_sales_data(
+    db: Session = Depends(get_db),
+    request: SalesDataRequest = Depends()
+):
 
+    query = db.query(schemas.Sales)
+    print(query)
     return []
 
 
