@@ -17,15 +17,14 @@ schemas.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/api/sales", response_model=List[SalesDataResponse])
+@app.get("/api/sales")
 async def get_sales_data(
     db: Session = Depends(get_db),
     request: SalesDataRequest = Depends()
 ):
 
     query = db.query(schemas.Sales)
-    print(query)
-    return []
+    return request.model_dump()
 
 
 @app.get("/api/sales/revenue", response_model=List[SalesDataResponse])
