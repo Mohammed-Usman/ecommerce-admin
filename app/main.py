@@ -17,14 +17,33 @@ schemas.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/api/sales")
+@app.get("/api/sales", response_model=list[SalesDataResponse])
 async def get_sales_data(
     db: Session = Depends(get_db),
     request: SalesDataRequest = Depends()
 ):
 
-    query = db.query(schemas.Sales)
-    return request.model_dump()
+    query = db.query(
+        schemas.Sales.id,
+        schemas.Sales.user_id,
+        schemas.SaleItems.created_at.label('transaction_timestamp'),
+        schemas.Products.name.label('product_name'),
+        schemas.Products.description,
+        schemas.ProductCategory.name.label('category_name'),
+        schemas.Products.price,
+        schemas.SaleItems.quantity
+    ).join(
+        schemas.SaleItems, schemas.SaleItems.sale_id == schemas.Sales.id, isouter=True
+    ).join(
+        schemas.Products, schemas.Products.id == schemas.SaleItems.product_id, isouter=True
+    ).join(
+        schemas.ProductCategory,
+        schemas.ProductCategory.id == schemas.Products.category_id, isouter=True
+    ).limit(request.limit).offset(request.offset)
+
+    print(query)
+
+    return query.all()
 
 
 @app.get("/api/sales/revenue", response_model=List[SalesDataResponse])
