@@ -26,9 +26,7 @@ class ProductCategory(Base):
 
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(VARCHAR(50), nullable=False, unique=True)
-    quantity = Column(Integer, CheckConstraint(
-        'quantity >=0'), nullable=False, default=0)
-
+    description = Column(String(250), nullable=False)
     created_at = Column(TIMESTAMP,
                         nullable=False, server_default=text("now()"))
 
@@ -50,7 +48,7 @@ class Products(Base):
     inventory_id = Column(Integer, ForeignKey(
         'inventory.id', ondelete='RESTRICT'))
 
-    price = Column(DECIMAL(3, 2), nullable=False)
+    price = Column(DECIMAL(5, 2), nullable=False)
 
     created_at = Column(TIMESTAMP,
                         nullable=False, server_default=text("now()"))
