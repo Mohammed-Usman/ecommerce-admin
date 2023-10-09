@@ -16,8 +16,14 @@ Before you begin, ensure you have the following dependencies installed:
 - [MySQL](https://www.mysql.com/) or another supported relational database
 
 ### Installation
+1. Create Database:
+ 
+   ```
+   CREATE DATABASE IF NOT EXISTS ecommerce;
 
-1. Clone the repository:
+   ```
+
+2. Clone the repository:
 
    ```bash
    git clone https://github.com/Mohammed-Usman/ecommerce-admin.git
@@ -29,7 +35,8 @@ Before you begin, ensure you have the following dependencies installed:
    pip install -r requirements.txt
    
     uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-
+    ```
+    Starting the FastApi server will create all required tables with columns with the help of  SqlAlchemy ORM.
 
 ## Version: 0.1.0
 
@@ -178,6 +185,11 @@ This document provides a comprehensive overview of the database schema for a dyn
 - **Relationships**:
   - Each sale item is associated with a particular sale.
   - Each sale item represents a product sold from the `products` table.
+
+### Inserting dummy data
+
+SQL queries for inserting dummy data can be found at the root level of this project
+named: dummy_data.txt
 
 ## Conclusion
 
