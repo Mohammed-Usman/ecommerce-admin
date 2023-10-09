@@ -1,0 +1,36 @@
+INSERT INTO ecommerce.product_category (name, description)
+VALUES
+    ('Electronics', 'Electronic gadgets and devices'),
+    ('Clothing', 'Fashion and apparel'),
+    ('Books', 'Books of various genres');
+
+INSERT INTO ecommerce.inventory (quantity)
+VALUES
+    (100),
+    (50),
+    (200),
+(10),
+(35);
+
+INSERT INTO ecommerce.products (name, description, category_id, inventory_id, price)
+VALUES
+    ('Smartphone', 'High-end smartphone with advanced features', 1, 1, 799.99),
+    ('Laptop', 'Powerful laptop for productivity and gaming', 1, 2, 1299.99),
+    ('T-Shirt', 'Casual cotton t-shirt', 2, 3, 19.99),
+    ('Jeans', 'Blue denim jeans for men', 2, 4, 39.99),
+    ('Science Fiction Book', 'Classic science fiction novel', 3, 5, 12.99);
+
+
+INSERT INTO ecommerce.sales (user_id, total)
+VALUES
+    (1, 199.99),
+    (2, 149.99),
+    (3, 42.97);
+
+
+INSERT INTO ecommerce.sale_items (sale_id, product_id, quantity)
+VALUES
+    (1, 1, 1),
+    (1, 3, 2),
+    (2, 2, 1),
+    (3, 4, 3);
