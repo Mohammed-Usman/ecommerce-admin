@@ -1,17 +1,14 @@
 from typing import Optional
 from pydantic import BaseModel, validator
+from sqlalchemy import and_, or_
 
 from datetime import datetime
 import pytz
 
 
-class SalesDataRequest(BaseModel):
+class DateFilter(BaseModel):
     start_date: Optional[str] = None
     end_date: Optional[str] = None
-    product: Optional[str] = None
-    category: Optional[str] = None
-    limit: Optional[int] = 10
-    offset: Optional[int] = 0
 
     @validator("start_date", "end_date")
     def validate_and_convert_to_utc(cls, value):
@@ -36,6 +33,17 @@ class SalesDataRequest(BaseModel):
             raise ValueError("Invalid ISO datetime format")
 
 
+class LimitOffset(BaseModel):
+    limit: Optional[int] = 10
+    offset: Optional[int] = 0
+
+
+class SalesDataRequest(DateFilter):
+
+    product: Optional[str] = None
+    category: Optional[str] = None
+
+
 class SalesDataResponse(BaseModel):
     id: int
     user_id: int
@@ -50,14 +58,24 @@ class SalesDataResponse(BaseModel):
         from_attributes = True
 
 
+class Revenue(BaseModel):
+    total_revenue: float
+
+
 class InventoryStatusResponse(BaseModel):
-    product: str
-    category: str
-    inventory_level: int
-    is_low_stock: bool
+    product_name: str
+    product_description: str
+    category_name: str
+    category_description: str
+    product_price: float
+    inventory_quantity: int
+    last_updated_at: datetime
 
 
 class ProductRegistrationRequest(BaseModel):
     product: str
+    product_description: Optional[str] = None
     category: str
+    category_description: Optional[str] = None
     price: float
+    quantity: int
