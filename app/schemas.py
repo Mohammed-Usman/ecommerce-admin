@@ -46,7 +46,7 @@ class Products(Base):
     __tablename__ = 'products'
 
     id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(VARCHAR(50), nullable=False)
+    name = Column(VARCHAR(50), nullable=False, unique=True)
     description = Column(String(250), nullable=True)
 
     category_id = Column(Integer, ForeignKey(
@@ -55,7 +55,7 @@ class Products(Base):
     inventory_id = Column(Integer, ForeignKey(
         'inventory.id', ondelete='RESTRICT'))
 
-    price = Column(DECIMAL(5, 2), nullable=False)
+    price = Column(DECIMAL(10, 2), nullable=False)
 
     created_at = Column(TIMESTAMP,
                         nullable=False, server_default=text("now()"))
@@ -70,7 +70,7 @@ class Sales(Base):
 
     id = Column(Integer, primary_key=True, nullable=False)
     user_id = Column(Integer, nullable=False)
-    total = Column(DECIMAL(5, 2), nullable=False)
+    total = Column(DECIMAL(10, 2), nullable=False)
     created_at = Column(TIMESTAMP,
                         nullable=False, server_default=text("now()"))
 
