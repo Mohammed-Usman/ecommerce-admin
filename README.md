@@ -33,10 +33,25 @@ Before you begin, ensure you have the following dependencies installed:
    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 
    pip install -r requirements.txt
-   
+   ```
+3. Configuration
+
+   To configure the application, create a `.env` file in the project root directory with the following settings:
+   ```ini
+    # .env
+    database_user_name=your_db_username
+    database_password=your_db_password
+    database_hostname=your_db_hostname
+    database_port=your_db_port
+    database_name=your_db_name
+   ```
+4. Run Server   
+Starting the FastApi server will create all required tables with columns with the help of  SqlAlchemy ORM.
+
+   ```bash
     uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     ```
-    Starting the FastApi server will create all required tables with columns with the help of  SqlAlchemy ORM.
+    
 
 ## Version: 0.1.0
 
