@@ -19,8 +19,6 @@ schemas.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-#
-
 
 @app.get("/api/sales", response_model=list[SalesDataResponse])
 async def get_sales_data(
@@ -140,7 +138,7 @@ async def get_inventory_status(
             detail="Data not available"
         )
 
-    return
+    return query
 
 
 @app.post("/api/products", status_code=status.HTTP_201_CREATED)
