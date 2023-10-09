@@ -1,7 +1,14 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, CheckConstraint, VARCHAR, DECIMAL
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    ForeignKey,
+    CheckConstraint,
+    VARCHAR,
+    DECIMAL
+)
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
-from sqlalchemy.orm import relationship
 from .database import Base
 
 
@@ -26,7 +33,7 @@ class ProductCategory(Base):
 
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(VARCHAR(50), nullable=False, unique=True)
-    description = Column(String(250), nullable=False)
+    description = Column(String(250), nullable=True)
     created_at = Column(TIMESTAMP,
                         nullable=False, server_default=text("now()"))
 
@@ -40,7 +47,7 @@ class Products(Base):
 
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(VARCHAR(50), nullable=False)
-    description = Column(String(250), nullable=False)
+    description = Column(String(250), nullable=True)
 
     category_id = Column(Integer, ForeignKey(
         'product_category.id', ondelete='RESTRICT'))
